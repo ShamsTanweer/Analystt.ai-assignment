@@ -4,7 +4,8 @@ To run this application, you'll need Node.js and npm installed on your machine.
 
 1. Clone this repository to your local machine:
 
-gh repo clone ShamsTanweer/Analystt.ai-assignment
+git clone https://github.com/ShamsTanweer/Analystt.ai-assignment.git
+
 
 Install the project dependencies:
 
