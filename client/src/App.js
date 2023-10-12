@@ -39,47 +39,24 @@ function App() {
 
   // Fetching data from Coingecko API.
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Attempt to fetch data from the original endpoint
-        const response = await fetch("/coingecko");
-        
+    fetch("/coingecko")
+      .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        
-        const data = await response.json();
+        return response.json();
+      })
+      .then((data) => {
         setCoingeckoData(data);
         setPaginatedCoins(data.slice(0, 10));
         setLoading(false);
-      } catch (error) {
-        // Handle errors from the original endpoint
-        console.error("Error fetching Coingecko data from the original endpoint:", error);
-  
-        // Attempt to fetch data from the alternative endpoint
-        try {
-          const altResponse = await fetch("https://analystt-ai-assignment.onrender.com/coingecko");
-          
-          if (!altResponse.ok) {
-            throw new Error("Network response was not ok from the alternative endpoint");
-          }
-  
-          const altData = await altResponse.json();
-          setCoingeckoData(altData);
-          setPaginatedCoins(altData.slice(0, 10));
-          setLoading(false);
-        } catch (altError) {
-          // Handle errors from the alternative endpoint
-          console.error("Error fetching Coingecko data from the alternative endpoint:", altError);
-          setError(altError.message);
-          setLoading(false);
-        }
-      }
-    };
-  
-    fetchData();
+      })
+      .catch((error) => {
+        console.error("Error fetching Coingecko data:", error);
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
-  
 
   return (
     <div className="App">
