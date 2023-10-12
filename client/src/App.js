@@ -37,24 +37,39 @@ function App() {
     setPaginatedCoins(coingeckoData.slice(startIndex, endIndex));
   };
 
-  // Fetching data from Coingecko API.
-  useEffect(() => {
-    fetch("/coingecko")
+  // Fetch data from the primary endpoint.
+
+  function fetchData(endpoint) {
+    return fetch(endpoint)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return response.json();
-      })
+      });
+  }
+
+  useEffect(() => {
+    fetchData("https://analystt-ai-assignment.netlify.app/coingecko")
       .then((data) => {
         setCoingeckoData(data);
-        setPaginatedCoins(data.slice(0, 10));
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching Coingecko data:", error);
-        setError(error.message);
-        setLoading(false);
+      .catch((primaryError) => {
+        console.error("Error fetching Coingecko data:", primaryError);
+        setError(primaryError);
+
+        // If there's an error with the primary endpoint, try the alternative endpoint.
+        fetchData("https://analystt-ai-assignment.onrender.com/coingecko")
+          .then((data) => {
+            setCoingeckoData(data);
+            setLoading(false);
+            setError(null); // Clear the previous error if the alternative request succeeds
+          })
+          .catch((alternativeError) => {
+            console.error("Error fetching Coingecko data from the alternative endpoint:", alternativeError);
+            setError(alternativeError);
+          });
       });
   }, []);
 
