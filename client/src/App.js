@@ -38,25 +38,56 @@ function App() {
   };
 
   // Fetching data from Coingecko API.
+  // useEffect(() => {
+  //   fetch("/coingecko")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setCoingeckoData(data);
+  //       setPaginatedCoins(data.slice(0, 10));
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching Coingecko data:", error);
+  //       setError(error.message);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+
+  const fetchData = async (url) => {
+    try {
+      // Try fetching data from the primary endpoint
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      setCoingeckoData(data);
+      setPaginatedCoins(data.slice(0, 10));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Coingecko data:", error);
+      setError(error.message);
+      setLoading(false);
+
+      if (url === "/coingecko") {
+        // If the primary endpoint fails, try the fallback endpoint
+        fetchData("https://analystt-ai-assignment.onrender.com/coingecko");
+      }
+    }
+  };
+
   useEffect(() => {
-    fetch("/coingecko")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setCoingeckoData(data);
-        setPaginatedCoins(data.slice(0, 10));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching Coingecko data:", error);
-        setError(error.message);
-        setLoading(false);
-      });
+    // Attempt to fetch data from the primary endpoint
+    fetchData("/coingecko");
   }, []);
+
 
   return (
     <div className="App">
