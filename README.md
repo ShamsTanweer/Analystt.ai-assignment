@@ -4,7 +4,7 @@ To run this application, you'll need Node.js and npm installed on your machine.
 
 1. Clone this repository to your local machine:
 
-git clone https://github.com/.............../coin-gecko-app.git
+gh repo clone ShamsTanweer/Analystt.ai-assignment
 
 Install the project dependencies:
 
