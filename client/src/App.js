@@ -38,60 +38,25 @@ function App() {
   };
 
   // Fetching data from Coingecko API.
-  // useEffect(() => {
-  //   fetch("/coingecko")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setCoingeckoData(data);
-  //       setPaginatedCoins(data.slice(0, 10));
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching Coingecko data:", error);
-  //       setError(error.message);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/coingecko");
+    fetch("/coingecko")
+      .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        const data = await response.json();
+        return response.json();
+      })
+      .then((data) => {
         setCoingeckoData(data);
+        setPaginatedCoins(data.slice(0, 10));
         setLoading(false);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching Coingecko data:", error);
         setError(error.message);
-
-        // Fetch from the fallback endpoint without any code or words attached
-        try {
-          const fallbackResponse = await fetch("https://analystt-ai-assignment.onrender.com/coingecko");
-          if (!fallbackResponse.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const fallbackData = await fallbackResponse.json();
-          setCoingeckoData(fallbackData);
-          setLoading(false);
-        } catch (fallbackError) {
-          console.error("Error fetching Coingecko data from the fallback endpoint:", fallbackError);
-          setError(fallbackError.message);
-        }
-      }
-    };
-
-    fetchData();
+        setLoading(false);
+      });
   }, []);
-
 
   return (
     <div className="App">
