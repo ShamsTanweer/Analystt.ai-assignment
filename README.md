@@ -9,20 +9,6 @@ git clone https://github.com/ShamsTanweer/Analystt.ai-assignment.git
 
 Install the project dependencies:
 
-Go to client folder and run:
-
-npm install
-
-Running the Application:
-
-After the installation is complete, you can start the development server using the following command:
-
-npm start
-
-
-Open your web browser and visit http://localhost:3000 
-
-
 Go to server folder and run command:
 
 npm install
@@ -42,6 +28,21 @@ This endpoint provides data about the top 100 cryptocurrencies, including their 
 Note that this API is accessed locally when you run the application, so make sure the application server is running (typically on port 5000) for the API to work correctly.
 How to Use
 On the application's main page, you'll see a list of cryptocurrencies fetched from the CoinGecko API.
+ 
+
+Go to client folder and run:
+
+npm install
+
+Running the Application:
+
+After the installation is complete, you can start the development server using the following command:
+
+npm start
+
+
+Open your web browser and visit http://localhost:3000 
+
 
 You can use the search bar to filter the cryptocurrencies by name or symbol. Just start typing, and the list will be filtered accordingly.
 
