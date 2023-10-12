@@ -38,8 +38,10 @@ function App() {
   };
 
   // Fetching data from Coingecko API.
+  const API_URL = "https://analystt-ai-assignment.onrender.com/coingecko";
+
   useEffect(() => {
-    fetch("/coingecko")
+    fetch("API_URL")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
